@@ -1,0 +1,28 @@
+// preparing territorial authority data so we can join the TA id from the retail victimisation data to retrieve TA name
+let
+    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\Areas\territorial_authority_2018_csv.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TA2018_V1_00", type text}, {"TA2018_V1_00_NAME", type text}, {"LAND_AREA_SQ_KM", type number}, {"AREA_SQ_KM", type number}}),
+    #"Added Custom" = Table.AddColumn(#"Changed Type", "PadLeft0TerritorialAuthority", each Text.PadStart([TA2018_V1_00],3,"0"))
+in
+    #"Added Custom"
+
+
+// Preparing retail victimisation data
+let
+    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\wd\v.csv"),[Delimiter=",", Columns=23, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Change Auror 0 to False" = Table.ReplaceValue(#"Promoted Headers","0","False",Replacer.ReplaceText,{"reported_by_auror_fl"}),
+    #"Change Auror 1 to True" = Table.ReplaceValue(#"Change Auror 0 to False","1","True",Replacer.ReplaceText,{"reported_by_auror_fl"}),
+    #"latest occurrence end date change type" = Table.TransformColumnTypes(#"Change Auror 1 to True",{{"reported_by_auror_fl", type logical}, {"occurrence_datetime", type datetime}, {"reported_date", type date}, {"earliest_occurrence_start_date", type date}, {"nzchi", type number}, {"latest_occurrence_end_date", type date}, {"init_proceeding_decision_date", type date}, {"victimisations", Int64.Type}}),
+    #"Sorted Rows" = Table.Sort(#"latest occurrence end date change type",{{"occurrence_datetime", Order.Ascending}}),
+    #"Replace null occurrence date" = Table.ReplaceValue(#"Sorted Rows",null,#datetime(1900, 1, 1, 0, 0, 0),Replacer.ReplaceValue,{"occurrence_datetime"}),
+    #"Add Clean Occurrence Date" = Table.AddColumn(#"Replace null occurrence date", "CleanOccurrenceDate", each if [occurrence_datetime] > #datetime(2019, 1, 1, 0, 0, 0) then [occurrence_datetime] else [reported_date]),
+    #"Set CleanOccurrenceDate to Date" = Table.TransformColumnTypes(#"Add Clean Occurrence Date",{{"CleanOccurrenceDate", type date}}),
+    #"Merged Queries" = Table.NestedJoin(#"Set CleanOccurrenceDate to Date", {"territorial_authority_code"}, territorial_authority_2018_csv, {"PadLeft0TerritorialAuthority"}, "territorial_authority_2018_csv", JoinKind.LeftOuter),
+    #"Expanded territorial_authority_2018_csv" = Table.ExpandTableColumn(#"Merged Queries", "territorial_authority_2018_csv", {"TA2018_V1_00", "TA2018_V1_00_NAME", "LAND_AREA_SQ_KM", "AREA_SQ_KM", "PadLeft0TerritorialAuthority"}, {"territorial_authority_2018_csv.TA2018_V1_00", "territorial_authority_2018_csv.TA2018_V1_00_NAME", "territorial_authority_2018_csv.LAND_AREA_SQ_KM", "territorial_authority_2018_csv.AREA_SQ_KM", "territorial_authority_2018_csv.PadLeft0TerritorialAuthority"}),
+    #"Removed Other Columns" = Table.SelectColumns(#"Expanded territorial_authority_2018_csv",{"victimisations", "anzsoc_group", "anzsoc_division", "off_scene_type", "injurytype", "reported_by_auror_fl", "nzchi", "use_of_weapon", "reported_date", "occurrence_datetime", "occurrence_hour_of_day", "earliest_occurrence_start_date", "latest_occurrence_end_date", "location", "police_area", "police_station", "meshblock_2013_census", "outcome_latest", "outcome_group", "outcome_division", "init_proceeding_decision_date", "offence", "CleanOccurrenceDate", "territorial_authority_2018_csv.TA2018_V1_00", "territorial_authority_2018_csv.TA2018_V1_00_NAME", "territorial_authority_2018_csv.PadLeft0TerritorialAuthority"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"territorial_authority_2018_csv.TA2018_V1_00_NAME", "Territorial Authority"}})
+in
+    #"Renamed Columns"
+
