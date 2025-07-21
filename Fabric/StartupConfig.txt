@@ -1,0 +1,10 @@
+To start up with a minimal configuration
+
+1. Create a new Spark pool named something like 'smallpool'
+  - Node family = Memory optimized
+  - Node size = Small
+  - Autoscale off
+  - Dynamically allocate executors off
+
+2. In Workspace settings -> Spark settings
+  - Set Default pool for workspace = smallpool
