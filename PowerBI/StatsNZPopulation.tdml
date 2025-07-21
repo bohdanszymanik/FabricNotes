@@ -1,0 +1,41 @@
+createOrReplace
+
+	table StatsNZPopulation
+		lineageTag: 7ddc604a-d0f4-45b7-a3cc-9885645f1590
+
+		column MonthYear
+			dataType: dateTime
+			formatString: Long Date
+			lineageTag: 29cc75fd-9bc4-4066-a713-a09777bc41f1
+			summarizeBy: none
+			sourceColumn: MonthYear
+
+			variation Variation
+				isDefault
+				relationship: 49bdd96b-6366-41d6-9f9b-2b3828748cb9
+				defaultHierarchy: LocalDateTable_bfbe86f8-78b3-4966-a10e-641098aac499.'Date Hierarchy'
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation UnderlyingDateTimeDataType = Date
+
+		column Population
+			dataType: int64
+			formatString: 0
+			lineageTag: 2b991ce9-09a9-4e38-99ea-bed669f81089
+			summarizeBy: sum
+			sourceColumn: Population
+
+			annotation SummarizationSetBy = Automatic
+
+		partition StatsNZPopulation = m
+			mode: import
+			source =
+					let
+					    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("XdOxagMxDIDhd7lZAcuWZXvvVOjU8chQQtZQCn3/3kmyzur6Yf74JGfft/ff1w1pg42gIkNNabvDvn0+v50pQTF+ez6cmYCMP75+bliVB8IwlrYyp+GnpW1cOLaNuUBb26w8KqS1rdyQANe2MSHktW3M7bjN0m7Kg/0npa3csfhpaRv/v7dxHT5BaXflzn5BaSsfY4pt44yxbbx8jrSHMlc/LW3jNvy0tE8+p8e+HWkbHyted5mTcs/Ql/bkkULbufsEz7YxprjLjMYtvJPJeH28tCdfm5f2ZA7zztmYYntyC+9kconvZDKn8E5yEc6ph11OJgr/ncm9hF0alyOy7jKTcuY4b+NyrUHaxlRj27jaQ77/AQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [MonthYear = _t, Population = _t]),
+					    #"Changed Type" = Table.TransformColumnTypes(Source,{{"MonthYear", type date}, {"Population", Int64.Type}})
+					in
+					    #"Changed Type"
+
+		annotation PBI_ResultType = Table
+
