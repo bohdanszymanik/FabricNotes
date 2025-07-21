@@ -1,0 +1,50 @@
+createOrReplace
+
+	table ACCClaims
+		lineageTag: 84daeb45-87c5-42a2-a6a8-1fc46609db95
+
+		column Year
+			dataType: int64
+			formatString: 0
+			lineageTag: e748a1f5-43ea-437c-8301-677562507f55
+			summarizeBy: sum
+			sourceColumn: Year
+
+			annotation SummarizationSetBy = Automatic
+
+		column Claims
+			dataType: int64
+			formatString: 0
+			lineageTag: db42ef92-4983-4785-9a27-315b2fe95528
+			summarizeBy: sum
+			sourceColumn: Claims
+
+			annotation SummarizationSetBy = Automatic
+
+		partition ACCClaims = m
+			mode: import
+			source =
+					let
+					    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjIwMlDSUTI3U4rVAfMMgTxDAwMY1wjENYTLGoO4RhYwrglYsZFSbCwA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Year = _t, Claims = _t]),
+					    // Load or create the new rows table
+					    NewRowsTable = Table.FromRows(
+					        {
+					            {"2015", "92"},
+					            {"2016", "124"},
+					            {"2017", "117"},
+					            {"2018", "117"},
+					            {"2019", "78"}
+					        },
+					        {"Year", "Claims"}
+					    ),
+					    // Append the new rows to the existing table
+					    UpdatedTable = Table.Combine({Source, NewRowsTable}),
+					    #"Changed Type" = Table.TransformColumnTypes(UpdatedTable,{{"Year", Int64.Type}, {"Claims", Int64.Type}}),
+					    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Year", Order.Ascending}})
+					in
+					    #"Sorted Rows"
+
+		annotation PBI_ResultType = Table
+
+		annotation PBI_NavigationStepName = Navigation
+
