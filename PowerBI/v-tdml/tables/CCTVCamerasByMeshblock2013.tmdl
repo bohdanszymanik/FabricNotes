@@ -1,0 +1,320 @@
+table CCTVCamerasByMeshblock2013
+	lineageTag: bc7720c5-f522-4cb6-99d6-e746edebee5f
+
+	column OID
+		dataType: int64
+		formatString: 0
+		lineageTag: 03cf5c9b-196c-426e-87f2-ea460a37ca7a
+		summarizeBy: none
+		sourceColumn: OID
+
+		annotation SummarizationSetBy = Automatic
+
+	column GmlID
+		dataType: string
+		lineageTag: ac2242f1-54f6-41eb-9fe0-97622b8dbf38
+		summarizeBy: none
+		sourceColumn: GmlID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meshblock
+		dataType: string
+		lineageTag: b5e30afe-b1f4-40f7-bfb2-442dea13174a
+		summarizeBy: none
+		sourceColumn: Meshblock
+
+		annotation SummarizationSetBy = Automatic
+
+	column MeshblockNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: c3c924a4-a0b6-4344-94b2-590f590958ed
+		summarizeBy: none
+		sourceColumn: MeshblockNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column AreaUnitCode
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b61f1a2-4f56-4115-a49b-e686b947b671
+		summarizeBy: none
+		sourceColumn: AreaUnitCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column AreaUnitName
+		dataType: string
+		lineageTag: 81031b44-2128-4ef7-8be7-f47e7c03472e
+		summarizeBy: none
+		sourceColumn: AreaUnitName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UrbanAreaCode
+		dataType: int64
+		formatString: 0
+		lineageTag: e094b1a3-acc3-42f3-83e7-293cc27a9c5a
+		summarizeBy: none
+		sourceColumn: UrbanAreaCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column UrbanAreaType
+		dataType: string
+		lineageTag: 91a6c08e-396a-4ced-a5f2-d47013e3aee5
+		summarizeBy: none
+		sourceColumn: UrbanAreaType
+
+		annotation SummarizationSetBy = Automatic
+
+	column UrbanAreaName
+		dataType: string
+		lineageTag: e8473390-9d9e-47c4-849d-206e27a6c25c
+		summarizeBy: none
+		sourceColumn: UrbanAreaName
+
+		annotation SummarizationSetBy = Automatic
+
+	column TLACode
+		dataType: int64
+		formatString: 0
+		lineageTag: 2657f66a-ba43-4bb2-bb22-fd3f22f417da
+		summarizeBy: none
+		sourceColumn: TLACode
+
+		annotation SummarizationSetBy = Automatic
+
+	column TLAName
+		dataType: string
+		lineageTag: a295a873-4411-4e03-81e6-9752becf581b
+		summarizeBy: none
+		sourceColumn: TLAName
+
+		annotation SummarizationSetBy = Automatic
+
+	column WardCode
+		dataType: int64
+		formatString: 0
+		lineageTag: c43a4854-51f5-482e-9912-c4a0c5544170
+		summarizeBy: none
+		sourceColumn: WardCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column WardName
+		dataType: string
+		lineageTag: 9f1694d8-6d2a-4aa5-83b1-8bd024f6bf92
+		summarizeBy: none
+		sourceColumn: WardName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommunityBoardCode
+		dataType: int64
+		formatString: 0
+		lineageTag: d81beec4-0f74-4688-90bb-ed0bd858019d
+		summarizeBy: none
+		sourceColumn: CommunityBoardCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommunityBoardName
+		dataType: string
+		lineageTag: 01afed31-dab7-4211-85a6-903084209550
+		summarizeBy: none
+		sourceColumn: CommunityBoardName
+
+		annotation SummarizationSetBy = Automatic
+
+	column TLASubdivisionCode
+		dataType: int64
+		formatString: 0
+		lineageTag: aec2744c-7ed8-4fde-8e25-f4f305f5bf4c
+		summarizeBy: none
+		sourceColumn: TLASubdivisionCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column TLASubdivisionName
+		dataType: string
+		lineageTag: b8a582cd-8ded-4986-a815-05433e15a25f
+		summarizeBy: none
+		sourceColumn: TLASubdivisionName
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionalCouncilCode
+		dataType: int64
+		formatString: 0
+		lineageTag: e487793c-3079-49cc-ab2a-6ab8ee06fb41
+		summarizeBy: none
+		sourceColumn: RegionalCouncilCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionalCouncilName
+		dataType: string
+		lineageTag: 10bc026a-a219-4404-9055-5f081f9e32f0
+		summarizeBy: none
+		sourceColumn: RegionalCouncilName
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeneralConstituencyCode
+		dataType: int64
+		formatString: 0
+		lineageTag: 297e3f1e-9238-479f-a0ea-c622e08f1eed
+		summarizeBy: none
+		sourceColumn: GeneralConstituencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeneralConstituencyName
+		dataType: string
+		lineageTag: 0d5b1370-b743-42bb-9b82-684c0b410cdc
+		summarizeBy: none
+		sourceColumn: GeneralConstituencyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaoriConstituencyCode
+		dataType: int64
+		formatString: 0
+		lineageTag: e05e82d2-4eeb-4939-be91-e56253d6a5d8
+		summarizeBy: none
+		sourceColumn: MaoriConstituencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaoriConstituencyName
+		dataType: string
+		lineageTag: 19ae6da1-36ed-4c71-b45f-a98a867df501
+		summarizeBy: none
+		sourceColumn: MaoriConstituencyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeneralElectoralDistrictCode_2007
+		dataType: int64
+		formatString: 0
+		lineageTag: acbbcc29-249b-458a-bdc6-d6a37f93b17f
+		summarizeBy: none
+		sourceColumn: GeneralElectoralDistrictCode_2007
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeneralElectoralDistrictName_2007
+		dataType: string
+		lineageTag: 1a0705b9-3c0d-421a-a511-40478b27f07d
+		summarizeBy: none
+		sourceColumn: GeneralElectoralDistrictName_2007
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaoriElectoralDistrictCode_2007
+		dataType: int64
+		formatString: 0
+		lineageTag: a5fec8b8-99f9-4650-959e-8aaf85e620f4
+		summarizeBy: none
+		sourceColumn: MaoriElectoralDistrictCode_2007
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaoriElectoralDistrictName_2007
+		dataType: string
+		lineageTag: 6173551c-9f1e-4bf3-87b1-811f40feb21d
+		summarizeBy: none
+		sourceColumn: MaoriElectoralDistrictName_2007
+
+		annotation SummarizationSetBy = Automatic
+
+	column LandCode
+		dataType: int64
+		formatString: 0
+		lineageTag: 519aea3d-a476-4bf5-96d5-174895d0ff70
+		summarizeBy: none
+		sourceColumn: LandCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column LandDescription
+		dataType: string
+		lineageTag: 43f81625-ffac-4fe0-9f7f-354010e5655a
+		summarizeBy: none
+		sourceColumn: LandDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column LandAreaSQKM
+		dataType: double
+		lineageTag: c7d54854-56fa-497b-b2d8-c68cc91e9f34
+		summarizeBy: none
+		sourceColumn: LandAreaSQKM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Meshblock_1
+		dataType: string
+		lineageTag: 635bed0a-d10f-422f-882e-5e2db57c44b6
+		summarizeBy: none
+		sourceColumn: Meshblock_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Shape_Length
+		dataType: double
+		lineageTag: 6bf53b95-af35-4af8-a372-0b926e6e3b8d
+		summarizeBy: none
+		sourceColumn: Shape_Length
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Shape_Area
+		dataType: double
+		lineageTag: 4c263eb3-40f4-48b6-9b09-fe82a6458950
+		summarizeBy: none
+		sourceColumn: Shape_Area
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Count of Points'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f6a9aed-107a-401d-8901-4ea987e5fa57
+		summarizeBy: none
+		sourceColumn: Count of Points
+
+		annotation SummarizationSetBy = Automatic
+
+	column CleanMeshblock
+		dataType: string
+		lineageTag: 6f5041d4-5a3d-4e25-9954-d848b386ecf9
+		summarizeBy: none
+		sourceColumn: CleanMeshblock
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CCTVCamerasByMeshblock2013 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\someone\Downloads\CCTVCamerasByMeshblock2013.xlsx"), null, true),
+				    CCTVCamerasByMeshblock2013_Sheet = Source{[Item="CCTVCamerasByMeshblock2013",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(CCTVCamerasByMeshblock2013_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OID", Int64.Type}, {"GmlID", type text}, {"Meshblock", type text}, {"MeshblockNumber", Int64.Type}, {"AreaUnitCode", Int64.Type}, {"AreaUnitName", type text}, {"UrbanAreaCode", Int64.Type}, {"UrbanAreaType", type text}, {"UrbanAreaName", type text}, {"TLACode", Int64.Type}, {"TLAName", type text}, {"WardCode", Int64.Type}, {"WardName", type text}, {"CommunityBoardCode", Int64.Type}, {"CommunityBoardName", type text}, {"TLASubdivisionCode", Int64.Type}, {"TLASubdivisionName", type text}, {"RegionalCouncilCode", Int64.Type}, {"RegionalCouncilName", type text}, {"GeneralConstituencyCode", Int64.Type}, {"GeneralConstituencyName", type text}, {"MaoriConstituencyCode", Int64.Type}, {"MaoriConstituencyName", type text}, {"GeneralElectoralDistrictCode_2007", Int64.Type}, {"GeneralElectoralDistrictName_2007", type text}, {"MaoriElectoralDistrictCode_2007", Int64.Type}, {"MaoriElectoralDistrictName_2007", type text}, {"LandCode", Int64.Type}, {"LandDescription", type text}, {"LandAreaSQKM", type number}, {"Meshblock_1", type any}, {"Shape_Length", type number}, {"Shape_Area", type number}, {"Count of Points", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "CleanMeshblock", each Text.Range([Meshblock], 3))
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

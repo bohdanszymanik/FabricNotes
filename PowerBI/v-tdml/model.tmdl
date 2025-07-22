@@ -1,0 +1,31 @@
+model Model
+	culture: en-NZ
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-NZ
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["VictimisationByStationJuly2014To5May2025","YearMonthVictimisationSum","StatsNZPopulation","InterpolatedPopulation","ACCClaims","VictimisationsByYearMB2021To2025","CCTVCamerasByMeshblock2013"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.145.1105.0 (25.07)+decbc46fce458c5b8d5109d6f32a743f2ac949c8
+
+ref table VictimisationByStationJuly2014To5May2025
+ref table YearMonthVictimisationSum
+ref table DateTableTemplate_29172950-55b9-414d-a431-f529ca95f790
+ref table LocalDateTable_b3f00e49-df90-4d4a-b75d-3a6acf1e3a17
+ref table LocalDateTable_5cf11ff2-44e9-46e9-9cb4-71492fbcec5c
+ref table StatsNZPopulation
+ref table LocalDateTable_bfbe86f8-78b3-4966-a10e-641098aac499
+ref table InterpolatedPopulation
+ref table ACCClaims
+ref table VictimisationsByYearMB2021To2025
+ref table CCTVCamerasByMeshblock2013
+ref table CCTVMeshblockAkld
+ref table CCTVMeshblockWgtn
+ref table CCTVMeshblockChCh
+
+ref cultureInfo en-NZ
+

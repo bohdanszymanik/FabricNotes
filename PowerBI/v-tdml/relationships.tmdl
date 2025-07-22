@@ -1,0 +1,19 @@
+relationship 0cc15a7c-025e-4c69-87f3-ebb57ad55fe4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VictimisationByStationJuly2014To5May2025.YearMonth
+	toColumn: LocalDateTable_b3f00e49-df90-4d4a-b75d-3a6acf1e3a17.Date
+
+relationship 6860d51e-b3c7-4c00-98c5-12da3e274090
+	joinOnDateBehavior: datePartOnly
+	fromColumn: YearMonthVictimisationSum.YearMonth
+	toColumn: LocalDateTable_5cf11ff2-44e9-46e9-9cb4-71492fbcec5c.Date
+
+relationship 49bdd96b-6366-41d6-9f9b-2b3828748cb9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: StatsNZPopulation.MonthYear
+	toColumn: LocalDateTable_bfbe86f8-78b3-4966-a10e-641098aac499.Date
+
+relationship AutoDetected_b98f2b44-b3b3-4aa2-9736-b60973af9a80
+	fromColumn: VictimisationsByYearMB2021To2025.'CCTVCamerasByMeshblock2013.CleanMeshblock'
+	toColumn: CCTVCamerasByMeshblock2013.CleanMeshblock
+

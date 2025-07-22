@@ -1,0 +1,39 @@
+table CCTVMeshblockAkld
+	lineageTag: d4dc78cb-b19b-49f9-b4df-c0e757f84d48
+
+	column Meshblock
+		lineageTag: bef33c94-858b-4676-8730-e92a41fb6be3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Meshblock]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CameraCount
+		formatString: 0
+		lineageTag: 4a81440a-470d-486c-b52a-d94145e433e4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CameraCount]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CCTVMeshblockAkld = calculated
+		mode: import
+		source = ```
+				
+				SELECTCOLUMNS(
+				    FILTER(
+				        CCTVCamerasByMeshblock2013,
+				        (CCTVCamerasByMeshblock2013[TLAName] IN {"Auckland"}) &&
+				        NOT (CCTVCamerasByMeshblock2013[Count of Points] IN {0})
+				
+				    ),
+				    "Meshblock", CCTVCamerasByMeshblock2013[CleanMeshblock],
+				    "CameraCount", CCTVCamerasByMeshblock2013[Count of Points]
+				)
+				
+				```
+
+	annotation PBI_Id = 227870e4b0934cbea9a67b1cc5756434
+

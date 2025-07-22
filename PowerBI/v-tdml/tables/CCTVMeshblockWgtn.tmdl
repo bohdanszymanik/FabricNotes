@@ -1,0 +1,39 @@
+table CCTVMeshblockWgtn
+	lineageTag: 04e6f1e7-d94c-4687-9086-24cffa0f0bcd
+
+	column Meshblock
+		lineageTag: 8ccae79f-c515-4e72-9e3a-b25c7baa596f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Meshblock]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CameraCount
+		formatString: 0
+		lineageTag: f121cb97-6882-4375-a5ae-e38429125508
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CameraCount]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CCTVMeshblockWgtn = calculated
+		mode: import
+		source = ```
+				
+				SELECTCOLUMNS(
+				    FILTER(
+				        CCTVCamerasByMeshblock2013,
+				        (CCTVCamerasByMeshblock2013[TLAName] IN {"Wellington City", "Lower Hutt City", "Porirua City", "Upper Hutt City"}) &&
+				        NOT (CCTVCamerasByMeshblock2013[Count of Points] IN {0})
+				
+				    ),
+				    "Meshblock", CCTVCamerasByMeshblock2013[CleanMeshblock],
+				    "CameraCount", CCTVCamerasByMeshblock2013[Count of Points]
+				)
+				
+				```
+
+	annotation PBI_Id = 035aff3087f445adaad994dbf1b4c5f0
+

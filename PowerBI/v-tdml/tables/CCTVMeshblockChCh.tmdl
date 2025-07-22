@@ -1,0 +1,39 @@
+table CCTVMeshblockChCh
+	lineageTag: 75b51e7e-d01a-4f72-9a65-2b16dc7cd20e
+
+	column Meshblock
+		lineageTag: 9b5ae01b-a198-4778-b137-2b8e63a60d12
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Meshblock]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CameraCount
+		formatString: 0
+		lineageTag: 586360a5-feca-4283-bc74-8246e6549109
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CameraCount]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CCTVMeshblockChCh = calculated
+		mode: import
+		source = ```
+				
+				SELECTCOLUMNS(
+				    FILTER(
+				        CCTVCamerasByMeshblock2013,
+				        (CCTVCamerasByMeshblock2013[TLAName] IN {"Waimakariri", "Christchurch City"}) &&
+				        NOT (CCTVCamerasByMeshblock2013[Count of Points] IN {0})
+				
+				    ),
+				    "Meshblock", CCTVCamerasByMeshblock2013[CleanMeshblock],
+				    "CameraCount", CCTVCamerasByMeshblock2013[Count of Points]
+				)
+				
+				```
+
+	annotation PBI_Id = ac2cf8816a91452f8bb5b685fe7f2a70
+

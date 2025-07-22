@@ -1,0 +1,118 @@
+table YearMonthVictimisationSum
+	lineageTag: a6b91eec-b7b6-4b91-8c6d-a4d0498a5d2e
+
+	column YearMonth
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 67a2847b-bdc8-4c18-9566-4854e02079ff
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		variation Variation
+			isDefault
+			relationship: 6860d51e-b3c7-4c00-98c5-12da3e274090
+			defaultHierarchy: LocalDateTable_5cf11ff2-44e9-46e9-9cb4-71492fbcec5c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column YearMonthVictimisations
+		dataType: double
+		lineageTag: 7cf9448f-1db5-485a-a2d8-e28723848309
+		summarizeBy: sum
+		sourceColumn: YearMonthVictimisations
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Location Type'
+		dataType: string
+		lineageTag: 5ddfece6-84e4-4ab4-af70-ecc8d9061632
+		summarizeBy: none
+		sourceColumn: Location Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'InterpolatedPopulation.interpolated_pop'
+		dataType: double
+		lineageTag: e678e778-e78d-4b38-af37-7cbecf1f7692
+		summarizeBy: sum
+		sourceColumn: InterpolatedPopulation.interpolated_pop
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YearMonthVictimisationsPerMillion
+		dataType: double
+		lineageTag: 1d9c3838-d0ae-41ae-ba9b-7c3709d14609
+		summarizeBy: sum
+		sourceColumn: YearMonthVictimisationsPerMillion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Territorial Authority'
+		dataType: string
+		lineageTag: 49954983-de16-4138-a6f2-a34d57650283
+		summarizeBy: none
+		sourceColumn: Territorial Authority
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weapons Used'
+		dataType: string
+		lineageTag: 68b77a0b-56eb-4615-b27e-80e9324a2524
+		summarizeBy: none
+		sourceColumn: Weapons Used
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: a0d3e23f-f047-441a-abda-fd5b78bce3fb
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Anzsoc Group'
+		dataType: string
+		lineageTag: 82dcc640-0b27-4c97-9148-5bc0a3ddfeb3
+		summarizeBy: none
+		sourceColumn: Anzsoc Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Person/Organisation
+		dataType: string
+		lineageTag: 2b7cce55-465f-4265-849d-34432fbfcc39
+		summarizeBy: none
+		sourceColumn: Person/Organisation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition YearMonthVictimisationSum = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\VictimisationsByPoliceStation\VictimisationsAgeROVBoundary.csv"),[Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Anzsoc Division", type text}, {"Year Month", type text}, {"Victimisations", Int64.Type}, {"Location Type", type text}, {"Territorial Authority", type text}, {"Police Station", type text}, {"Police District", type text}, {"Police Area", type text}, {"Person/Organisation", type text}, {"Weapons Used", type text}, {"Age Group", type text}, {"Anzsoc Group", type text}, {"Anzsoc Subdivision", type text}, {"Anzsoc Subgroup", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "YearMonth", each Date.FromText([Year Month], [Format="M/d/yyyy", Culture="us-EN"])),
+				    #"Grouped Rows" = Table.Group(#"Added Custom", {"YearMonth", "Location Type", "Age Group", "Anzsoc Group", "Territorial Authority", "Person/Organisation", "Weapons Used"}, {{"YearMonthVictimisations", each List.Sum([Victimisations]), type nullable number}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Grouped Rows",{{"YearMonth", type date}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type1", {"YearMonth"}, InterpolatedPopulation, {"year_month"}, "InterpolatedPopulation", JoinKind.LeftOuter),
+				    #"Expanded InterpolatedPopulation" = Table.ExpandTableColumn(#"Merged Queries", "InterpolatedPopulation", {"interpolated_pop"}, {"InterpolatedPopulation.interpolated_pop"}),
+				    #"Added Custom1" = Table.AddColumn(#"Expanded InterpolatedPopulation", "YearMonthVictimisationsPerMillion", each [YearMonthVictimisations]*1000000 /[InterpolatedPopulation.interpolated_pop]),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"YearMonthVictimisationsPerMillion", type number}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

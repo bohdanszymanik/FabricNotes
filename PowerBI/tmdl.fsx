@@ -16,6 +16,6 @@ dbs.Model
 
 // write out to a folder - it will be populated with a cultures folder, a tables folder, and in the root the *.tmdl files for the database, model and relationships
 
-let out = @"C:\Users\BhodanSzymanilk\wd\TDMLScript\v-tmdl"
+let out = @"C:\Users\someone\wd\TDMLScript\v-tmdl"
 
 Microsoft.AnalysisServices.Tabular.TmdlSerializer.SerializeDatabaseToFolder(dbs, out);

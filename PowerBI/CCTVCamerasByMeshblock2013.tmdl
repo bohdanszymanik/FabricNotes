@@ -308,7 +308,7 @@ createOrReplace
 			mode: import
 			source =
 					let
-					    Source = Excel.Workbook(File.Contents("C:\Users\BhodanSzymanilk\Downloads\CCTVCamerasByMeshblock2013.xlsx"), null, true),
+					    Source = Excel.Workbook(File.Contents("C:\Users\someone\Downloads\CCTVCamerasByMeshblock2013.xlsx"), null, true),
 					    CCTVCamerasByMeshblock2013_Sheet = Source{[Item="CCTVCamerasByMeshblock2013",Kind="Sheet"]}[Data],
 					    #"Promoted Headers" = Table.PromoteHeaders(CCTVCamerasByMeshblock2013_Sheet, [PromoteAllScalars=true]),
 					    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OID", Int64.Type}, {"GmlID", type text}, {"Meshblock", type text}, {"MeshblockNumber", Int64.Type}, {"AreaUnitCode", Int64.Type}, {"AreaUnitName", type text}, {"UrbanAreaCode", Int64.Type}, {"UrbanAreaType", type text}, {"UrbanAreaName", type text}, {"TLACode", Int64.Type}, {"TLAName", type text}, {"WardCode", Int64.Type}, {"WardName", type text}, {"CommunityBoardCode", Int64.Type}, {"CommunityBoardName", type text}, {"TLASubdivisionCode", Int64.Type}, {"TLASubdivisionName", type text}, {"RegionalCouncilCode", Int64.Type}, {"RegionalCouncilName", type text}, {"GeneralConstituencyCode", Int64.Type}, {"GeneralConstituencyName", type text}, {"MaoriConstituencyCode", Int64.Type}, {"MaoriConstituencyName", type text}, {"GeneralElectoralDistrictCode_2007", Int64.Type}, {"GeneralElectoralDistrictName_2007", type text}, {"MaoriElectoralDistrictCode_2007", Int64.Type}, {"MaoriElectoralDistrictName_2007", type text}, {"LandCode", Int64.Type}, {"LandDescription", type text}, {"LandAreaSQKM", type number}, {"Meshblock_1", type any}, {"Shape_Length", type number}, {"Shape_Area", type number}, {"Count of Points", Int64.Type}}),

@@ -1,6 +1,6 @@
 // preparing territorial authority data so we can join the TA id from the retail victimisation data to retrieve TA name
 let
-    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\Areas\territorial_authority_2018_csv.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\Areas\territorial_authority_2018_csv.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"TA2018_V1_00", type text}, {"TA2018_V1_00_NAME", type text}, {"LAND_AREA_SQ_KM", type number}, {"AREA_SQ_KM", type number}}),
     #"Added Custom" = Table.AddColumn(#"Changed Type", "PadLeft0TerritorialAuthority", each Text.PadStart([TA2018_V1_00],3,"0"))
@@ -10,7 +10,7 @@ in
 
 // Preparing retail victimisation data
 let
-    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\wd\v.csv"),[Delimiter=",", Columns=23, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    Source = Csv.Document(File.Contents("C:\Users\someone\wd\v.csv"),[Delimiter=",", Columns=23, Encoding=1252, QuoteStyle=QuoteStyle.None]),
     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     #"Change Auror 0 to False" = Table.ReplaceValue(#"Promoted Headers","0","False",Replacer.ReplaceText,{"reported_by_auror_fl"}),
     #"Change Auror 1 to True" = Table.ReplaceValue(#"Change Auror 0 to False","1","True",Replacer.ReplaceText,{"reported_by_auror_fl"}),

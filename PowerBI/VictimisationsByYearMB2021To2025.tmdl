@@ -99,7 +99,7 @@ createOrReplace
 			mode: import
 			source = ```
 					let
-					    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\VictimisationsByTimePlace\VictimisationsByTimePlace2021to2025.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+					    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\VictimisationsByTimePlace\VictimisationsByTimePlace2021to2025.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
 					    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 					    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each true),
 					    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Location Type", type text}, {"ANZSOC Division", type text}, {"Victimisations", Int64.Type}, {"ANZSOC Group", type text}, {"Meshblock", Int64.Type}, {"Year Month", type date}}),

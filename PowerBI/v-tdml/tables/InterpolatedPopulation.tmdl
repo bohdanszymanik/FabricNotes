@@ -1,0 +1,57 @@
+table InterpolatedPopulation
+	lineageTag: 3497e333-5fdc-42be-84aa-b5754a191311
+
+	column year_month
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 479903d3-2d75-42b6-afcc-e6e704feb9b1
+		summarizeBy: none
+		sourceColumn: year_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month_year_raw
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c1cc307e-48e6-477d-bed1-0b3a2d746fca
+		summarizeBy: none
+		sourceColumn: month_year_raw
+
+		annotation SummarizationSetBy = Automatic
+
+	column pop
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 4d79b2e7-c0c4-4c66-bf59-6355eb6bb2cd
+		summarizeBy: sum
+		sourceColumn: pop
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column interpolated_pop
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 647710ec-3c68-4d2a-8f99-b21a042ea321
+		summarizeBy: sum
+		sourceColumn: interpolated_pop
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition InterpolatedPopulation = m
+		mode: directQuery
+		source =
+				let
+				    Source = Sql.Database("n2vzs3fnx6cetgj32g7ze7m3p4-62uvjh6r4piubhcraudtbuowwu.datawarehouse.fabric.microsoft.com", "Retail_Crime_Index_Lakehouse"),
+				    dbo_population = Source{[Schema="dbo",Item="population"]}[Data]
+				in
+				    dbo_population
+
+	annotation PBI_ResultType = Table
+

@@ -56,7 +56,7 @@ SELECTCOLUMNS(
 
 // YearMonthVictimisationSum
 let
-    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\VictimisationsByPoliceStation\VictimisationsAgeROVBoundary.csv"),[Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\VictimisationsByPoliceStation\VictimisationsAgeROVBoundary.csv"),[Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.None]),
     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Anzsoc Division", type text}, {"Year Month", type text}, {"Victimisations", Int64.Type}, {"Location Type", type text}, {"Territorial Authority", type text}, {"Police Station", type text}, {"Police District", type text}, {"Police Area", type text}, {"Person/Organisation", type text}, {"Weapons Used", type text}, {"Age Group", type text}, {"Anzsoc Group", type text}, {"Anzsoc Subdivision", type text}, {"Anzsoc Subgroup", type text}}),
     #"Added Custom" = Table.AddColumn(#"Changed Type", "YearMonth", each Date.FromText([Year Month], [Format="M/d/yyyy", Culture="us-EN"])),
@@ -71,7 +71,7 @@ in
 
 // VictimisationsByYearMB2021To2025
 let
-    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\VictimisationsByTimePlace\VictimisationsByTimePlace2021to2025.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\VictimisationsByTimePlace\VictimisationsByTimePlace2021to2025.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each true),
     #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Location Type", type text}, {"ANZSOC Division", type text}, {"Victimisations", Int64.Type}, {"ANZSOC Group", type text}, {"Meshblock", Int64.Type}, {"Year Month", type date}}),
@@ -89,7 +89,7 @@ in
 
 // VictimisationByStationJuly2014To5May2025
 let
-    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\VictimisationsByPoliceStation\VictimisationByStationJuly2014To5May2025_og.csv"),[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+    Source = Csv.Document(File.Contents("C:\Users\someone\OneDrive - someorg\Documents\wd\VictimisationsByPoliceStation\VictimisationByStationJuly2014To5May2025_og.csv"),[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
     #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Anzsoc Division", type text}, {"Year Month", type text}, {"Victimisations", Int64.Type}, {"Location", type text}, {"Location Type", type text}, {"Territorial Authority", type text}, {"Police Station", type text}, {"Police District", type text}, {"Police Area", type text}, {"Person/Organisation", type text}, {"Weapon", type text}, {"Weapons Used", type text}, {"Age Group", type text}, {"Anzsoc Group", type text}, {"Anzsoc Subdivision", type text}, {"Anzsoc Subgroup", type text}}),
     #"Added Custom" = Table.AddColumn(#"Changed Type", "YearMonth", each Date.FromText([Year Month], [Format="M/d/yyyy", Culture="us-EN"]), Date.Type),
@@ -100,7 +100,7 @@ in
 
 
 let
-    Source = Excel.Workbook(File.Contents("C:\Users\BhodanSzymanilk\Downloads\CCTVCamerasByMeshblock2013.xlsx"), null, true),
+    Source = Excel.Workbook(File.Contents("C:\Users\someone\Downloads\CCTVCamerasByMeshblock2013.xlsx"), null, true),
     CCTVCamerasByMeshblock2013_Sheet = Source{[Item="CCTVCamerasByMeshblock2013",Kind="Sheet"]}[Data],
     #"Promoted Headers" = Table.PromoteHeaders(CCTVCamerasByMeshblock2013_Sheet, [PromoteAllScalars=true]),
     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OID", Int64.Type}, {"GmlID", type text}, {"Meshblock", type text}, {"MeshblockNumber", Int64.Type}, {"AreaUnitCode", Int64.Type}, {"AreaUnitName", type text}, {"UrbanAreaCode", Int64.Type}, {"UrbanAreaType", type text}, {"UrbanAreaName", type text}, {"TLACode", Int64.Type}, {"TLAName", type text}, {"WardCode", Int64.Type}, {"WardName", type text}, {"CommunityBoardCode", Int64.Type}, {"CommunityBoardName", type text}, {"TLASubdivisionCode", Int64.Type}, {"TLASubdivisionName", type text}, {"RegionalCouncilCode", Int64.Type}, {"RegionalCouncilName", type text}, {"GeneralConstituencyCode", Int64.Type}, {"GeneralConstituencyName", type text}, {"MaoriConstituencyCode", Int64.Type}, {"MaoriConstituencyName", type text}, {"GeneralElectoralDistrictCode_2007", Int64.Type}, {"GeneralElectoralDistrictName_2007", type text}, {"MaoriElectoralDistrictCode_2007", Int64.Type}, {"MaoriElectoralDistrictName_2007", type text}, {"LandCode", Int64.Type}, {"LandDescription", type text}, {"LandAreaSQKM", type number}, {"Meshblock_1", type any}, {"Shape_Length", type number}, {"Shape_Area", type number}, {"Count of Points", Int64.Type}}),
