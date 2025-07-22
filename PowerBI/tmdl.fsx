@@ -14,7 +14,7 @@ let dbs = server.Databases.GetByName("Victimisations2014To2025")
 dbs
 dbs.Model
 
-// write out to a folder - it will be populated with a cultures folder, a tables folder, and in the root the *.tmdl files
+// write out to a folder - it will be populated with a cultures folder, a tables folder, and in the root the *.tmdl files for the database, model and relationships
 
 let out = @"C:\Users\BhodanSzymanilk\wd\TDMLScript\v-tmdl"
 
