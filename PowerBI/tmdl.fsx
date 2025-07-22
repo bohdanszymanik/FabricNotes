@@ -14,6 +14,8 @@ let dbs = server.Databases.GetByName("Victimisations2014To2025")
 dbs
 dbs.Model
 
-let out = @"C:\Users\BhodanSzymanilk\wd\TDMLScript\v-tdml"
+// write out to a folder - it will be populated with a cultures folder, a tables folder, and in the root the *.tmdl files
+
+let out = @"C:\Users\BhodanSzymanilk\wd\TDMLScript\v-tmdl"
 
 Microsoft.AnalysisServices.Tabular.TmdlSerializer.SerializeDatabaseToFolder(dbs, out);
