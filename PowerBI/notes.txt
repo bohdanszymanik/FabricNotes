@@ -26,3 +26,31 @@ let
 in
     #"Renamed Columns"
 
+
+changed to
+
+let
+    Source = Csv.Document(File.Contents("C:\Users\BhodanSzymanilk\OneDrive - RetailMag\Documents\wd\RetailVictimisation\v.csv"),[Delimiter=",", Columns=24, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Change Auror 0 to False" = Table.ReplaceValue(#"Promoted Headers","0","False",Replacer.ReplaceText,{"reported_by_auror_fl"}),
+    #"Change Auror 1 to True" = Table.ReplaceValue(#"Change Auror 0 to False","1","True",Replacer.ReplaceText,{"reported_by_auror_fl"}),
+    #"latest occurrence end date change type" = Table.TransformColumnTypes(#"Change Auror 1 to True",{{"reported_by_auror_fl", type logical}, {"occurrence_datetime", type datetime}, {"reported_date", type date}, {"earliest_occurrence_start_date", type date}, {"nzchi", type number}, {"latest_occurrence_end_date", type date}, {"init_proceeding_decision_date", type date}, {"victimisations", Int64.Type}}),
+    #"Sorted Rows" = Table.Sort(#"latest occurrence end date change type",{{"occurrence_datetime", Order.Descending}}),
+    #"Replace null occurrence date" = Table.ReplaceValue(#"Sorted Rows",null,#datetime(1900, 1, 1, 0, 0, 0),Replacer.ReplaceValue,{"occurrence_datetime"}),
+    #"Fix Future Occurrence Dates" = Table.AddColumn(#"Replace null occurrence date", "CleanFutureOccurrenceDate", each if ([occurrence_datetime] > DateTime.LocalNow()) then DateTime.Date([reported_date]) else DateTime.Date([occurrence_datetime])),
+    #"Copy across Occurrence time" = Table.AddColumn(#"Fix Future Occurrence Dates", "CleanFutureOccurrenceTime", each Time.From([occurrence_datetime])),
+    #"Sort occurrence datetime desc" = Table.Sort(#"Copy across Occurrence time",{{"occurrence_datetime", Order.Descending}}),
+    #"Fix Prior Occurrence Dates" = Table.AddColumn(#"Sort occurrence datetime desc", "CleanOccurrenceDate", each if [occurrence_datetime] < #datetime(2019, 1, 1, 0, 0, 0) then [reported_date] else [occurrence_datetime]),
+    #"Set CleanOccurrenceDate to Date" = Table.TransformColumnTypes(#"Fix Prior Occurrence Dates",{"CleanOccurrenceDate", type date}),
+    #"Sorted Rows2" = Table.Sort(#"Set CleanOccurrenceDate to Date",{{"CleanOccurrenceDate", Order.Ascending}}),
+    #"Added Custom" = Table.AddColumn(#"Sorted Rows2", "CleanOccurrenceDateTime", each DateTime.From( Text.From([CleanOccurrenceDate]) & " " & Text.From([CleanFutureOccurrenceTime]))),
+    #"Changed Type to DateTime" = Table.TransformColumnTypes(#"Added Custom",{{"victimisations", type datetime}}),
+    #"Merged Queries" = Table.NestedJoin(#"Changed Type to DateTime", {"territorial_authority_code"}, territorial_authority_2018_csv, {"PadLeft0TerritorialAuthority"}, "territorial_authority_2018_csv", JoinKind.LeftOuter),
+    #"Expanded territorial_authority_2018_csv" = Table.ExpandTableColumn(#"Merged Queries", "territorial_authority_2018_csv", {"TA2018_V1_00", "TA2018_V1_00_NAME", "LAND_AREA_SQ_KM", "AREA_SQ_KM", "PadLeft0TerritorialAuthority"}, {"territorial_authority_2018_csv.TA2018_V1_00", "territorial_authority_2018_csv.TA2018_V1_00_NAME", "territorial_authority_2018_csv.LAND_AREA_SQ_KM", "territorial_authority_2018_csv.AREA_SQ_KM", "territorial_authority_2018_csv.PadLeft0TerritorialAuthority"}),
+    #"Removed Other Columns" = Table.SelectColumns(#"Expanded territorial_authority_2018_csv",{"victimisations", "anzsoc_group", "anzsoc_division", "off_scene_type", "injurytype", "reported_by_auror_fl", "nzchi", "use_of_weapon", "reported_date", "occurrence_datetime", "occurrence_hour_of_day", "earliest_occurrence_start_date", "latest_occurrence_end_date", "location", "police_area", "police_station", "meshblock_2013_census", "outcome_latest", "outcome_group", "outcome_division", "init_proceeding_decision_date", "offence", "CleanOccurrenceDateTime", "territorial_authority_2018_csv.TA2018_V1_00", "territorial_authority_2018_csv.TA2018_V1_00_NAME", "territorial_authority_2018_csv.PadLeft0TerritorialAuthority"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"territorial_authority_2018_csv.TA2018_V1_00_NAME", "Territorial Authority"}}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"CleanOccurrenceDateTime", type datetime}}),
+    #"Sorted Rows1" = Table.Sort(#"Changed Type",{{"CleanOccurrenceDateTime", Order.Ascending}})
+
+in
+    #"Sorted Rows1"
